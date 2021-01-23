@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - My Closed Tickets</title>
+</head>
+
+<!--/*@thymesVar id="myClosedTickets" type="java.util.List"*/-->
+<!--/*@thymesVar id="closedTicket" type="com.garygriffaw.tickettracker.dto.TicketTableDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3>My Closed Tickets</h3>
+    <div class="tt-section-margin">
+        <div th:if="${myClosedTickets.isEmpty()}" class="tt-empty-table-text">
+            No closed tickets created by, owned by, assigned to, or closed by me
+        </div>
+        <div th:if="${!myClosedTickets.isEmpty()}">
+            <table class="table table-bordered table-striped">
+                <thead class="tt-thead">
+                    <tr>
+                        <th class="w-auto">Priority</th>
+                        <th class="w-auto">Date</th>
+                        <th class="w-auto">Title</th>
+                        <th class="w-auto">Status</th>
+                        <th class="w-auto"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="closedTicket : ${myClosedTickets}">
+                        <td th:text="${closedTicket.priorityDisplayValue}">Priority 1</td>
+                        <td th:text="${#temporals.format(closedTicket.createdDateTime, 'dd-MMM-yyyy h:mm a')}">Date 1</td>
+                        <td th:text="${closedTicket.title}">Title 1</td>
+                        <td th:text="${closedTicket.ticketStatusDisplayValue}">Status 1</td>
+                        <td>
+                            <a th:href="@{/tickets/view(id=${closedTicket.ticketId})}"  class="btn tt-btn-primary btn-sm">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

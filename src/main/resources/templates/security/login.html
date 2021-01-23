@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - Login</title>
+</head>
+
+<body>
+<div class="container">
+    <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;">
+        <h3>Please Login</h3>
+        <div class="tt-section-margin">
+            <div th:if="${param.error}" class="alert alert-danger">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-primary">
+                You have been logged out.
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn tt-btn-primary btn-block mb-3">Login</button>
+            <a th:href="@{/register}" class="btn tt-btn-primary btn-block">Register</a>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

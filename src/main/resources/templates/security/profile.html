@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http:/www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - My Profile</title>
+</head>
+
+<!--/*@thymesVar id="profileDto" type="com.garygriffaw.tickettracker.dto.ProfileDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form autocomplete="off" th:action="@{/profile/save}" th:object="${profileDto}" method="post">
+        <h3>My Profile</h3>
+        <div class="tt-section-margin">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('userName')}"
+                     th:errors="*{userName}">
+                </div>
+                <input type="text" readonly class="form-control-plaintext" id="username"
+                       th:field="*{userName}" placeholder="Username">
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label for="firstname">First Name</label>
+                    <div class="alert tt-alert"
+                         th:if="${#fields.hasErrors('firstName')}"
+                         th:errors="*{firstName}">
+                    </div>
+                    <input type="text" class="form-control" id="firstname"
+                           th:field="*{firstName}" placeholder="First Name" autofocus>
+                </div>
+                <div class="col">
+                    <label for="lastname">Last Name</label>
+                    <div class="alert tt-alert"
+                         th:if="${#fields.hasErrors('lastName')}"
+                         th:errors="*{lastName}">
+                    </div>
+                    <input type="text" class="form-control" id="lastname"
+                           th:field="*{lastName}" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('email')}"
+                     th:errors="*{email}">
+                </div>
+                <input type="text" class="form-control" id="email"
+                       th:field="*{email}" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <button class="btn tt-btn-primary col-2 mb-3" type="submit" name="save" value="Save">Update Profile</button>
+                <button class="btn tt-btn-primary col-2 mb-3" type="submit" name="cancel" value="Cancel">Cancel</button>
+            </div>
+            <div class="form-group">
+                <a th:href="@{/password}" class="btn tt-btn-primary col-2 mb-3">Change Password</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - Update User</title>
+</head>
+
+<!--/*@thymesVar id="userAccountUpdateDto" type="com.garygriffaw.tickettracker.dto.UserAccountUpdateDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/users/save}" th:object="${userAccountUpdateDto}" method="POST">
+        <h3>Update User</h3>
+        <div class="tt-section-margin">
+            <!-- ID used for updates  -->
+            <input type="hidden" th:field="*{userName}">
+
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('firstName')}"
+                     th:errors="*{firstName}">
+                </div>
+                <input type="text" class="form-control" id="firstName"
+                       th:field="*{firstName}" placeholder="First Name" autofocus>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('lastName')}"
+                     th:errors="*{lastName}">
+                </div>
+                <input type="text" class="form-control" id="lastName"
+                       th:field="*{lastName}" placeholder="Last Name">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('email')}"
+                     th:errors="*{email}">
+                </div>
+                <input type="text" class="form-control" id="email"
+                       th:field="*{email}" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('role')}"
+                     th:errors="*{role}">
+                </div>
+                <select class="form-control" id="role" th:field="*{role}">
+                    <option th:each="rolevalue : *{roleSelectListDto}"
+                            th:value="${rolevalue.roleValue}"
+                            th:text="${rolevalue.displayValue}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="enabled" th:field="*{enabled}">
+                <label class="form-check-label" for="enabled">Enabled</label>
+            </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+            <button class="btn tt-btn-primary my-3" type="submit" name="save" value="Save">Update User</button>
+            <button class="btn tt-btn-primary my-3" type="submit" name="cancel" value="Cancel">Cancel</button>
+        </div>
+
+        <h3>Queues</h3>
+        <div class="tt-section-margin">
+            <a th:href="@{/users/add-queue(id=*{userName})}" class="btn tt-btn-primary col-2 mb-3">Add New Queue</a>
+            <div th:if="*{queues.isEmpty()}" class="tt-empty-table-text">
+                No queues
+            </div>
+            <div th:if="*{!queues.isEmpty()}">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr th:each="queue : *{queues}">
+                            <td>
+                                <span th:text="${queue.queueName}"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

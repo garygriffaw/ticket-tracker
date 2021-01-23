@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - New Queue</title>
+</head>
+
+<!--/*@thymesVar id="queueCreateDto" type="com.garygriffaw.tickettracker.dto.QueueCreateDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/queues/save}" th:object="${queueCreateDto}" method="POST">
+        <h3>New Queue</h3>
+        <div class="tt-section-margin">
+            <div class="form-group">
+                <label for="queueName">Queue Name</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('queueName')}"
+                     th:errors="*{queueName}">
+                </div>
+                <input type="text" class="form-control" id="queueName"
+                       th:field="*{queueName}" placeholder="Queue Name" autofocus>
+            </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+            <div class="form-group">
+                <button class="btn tt-btn-primary col-2" type="submit" name="save" value="Save">Submit Queue</button>
+                <button class="btn tt-btn-primary col-2" type="submit" name="cancel" value="Cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

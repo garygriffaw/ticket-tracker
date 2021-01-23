@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - New Comment</title>
+</head>
+
+<!--/*@thymesVar id="ticketCommentDto" type="com.garygriffaw.tickettracker.dto.TicketCommentDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/tickets/save-comment}" th:object="${ticketCommentDto}" method="POST">
+        <h3>New Comment</h3>
+        <div class="tt-section-margin">
+            <input type="hidden" th:field="*{ticketId}">
+            <div class="form-group">
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('commentText')}"
+                     th:errors="*{commentText}">
+                </div>
+                <textarea rows="5" class="form-control" id="commentText"
+                          th:field="*{commentText}" placeholder="Comment" autofocus>
+                </textarea>
+            </div>
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <button class="btn tt-btn-primary col-2" type="submit" name="save" value="Save">Submit Comment</button>
+            <button class="btn tt-btn-primary col-2" type="submit" name="cancel" value="Cancel">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

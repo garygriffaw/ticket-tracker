@@ -1,0 +1,77 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: Verdana,sans-serif;
+    color: #333;
+    background-color: #fff;
+}
+
+:root {
+    /* Color Theme Swatches */
+    --wfColors-darkBlue: #103F66;
+    --wfColors-medBlue: #185F99;
+    --wfColors-lightBlue: #497EAA;
+    --wfColors-offWhite: #ebeaf8;
+}
+
+.navbar {
+    margin-bottom: 1em;
+}
+
+h3 {
+    margin-top: .5em;
+    color: var(--wfColors-darkBlue);
+}
+
+label {
+    font-size: 1.1em;
+}
+
+
+/* Custom Ticket Tracker classes */
+.tt-bg-dark {
+    background-color: var(--wfColors-darkBlue);
+}
+
+.tt-bg-med {
+    background-color: var(--wfColors-medBlue);
+}
+
+.tt-bg-light {
+    background-color: var(--wfColors-lightBlue);
+}
+
+.tt-empty-table-text {
+    color: #6c757d;
+}
+
+.tt-section-margin {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.tt-btn-primary {
+    color: #fff;
+    background-color: var(--wfColors-medBlue);
+    border-color: var(--wfColors-medBlue);
+}
+
+.tt-btn-primary:hover {
+    color: #fff;
+    background-color: var(--wfColors-darkBlue);
+    border-color: var(--wfColors-darkBlue);
+}
+
+.table .tt-thead th {
+    color: #fff;
+    background-color: var(--wfColors-darkBlue);
+    border-color: var(--wfColors-medBlue);
+}
+
+.tt-alert {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+

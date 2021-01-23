@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - View Ticket</title>
+</head>
+
+<!--/*@thymesVar id="ticketViewDto" type="com.garygriffaw.tickettracker.dto.TicketViewDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container" th:object="${ticketViewDto}">
+    <h3>View Ticket</h3>
+    <div class="tt-section-margin">
+        <!-- ID used for updates  -->
+        <input type="hidden" th:field="*{ticketId}">
+
+        <div class="form-group row align-items-center">
+            <label for="title" class="col-sm-2">Title</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="title" th:text="*{title}"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="description" class="col-sm-2">Description</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="description" th:text="*{description}" style="white-space: pre-line"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="createdDateTime" class="col-sm-2">Created</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="createdDateTime" th:text="${#temporals.format(ticketViewDto.createdDateTime, 'dd-MMM-yyyy h:mm a')}"></span>
+                <span> by </span>
+                <span id="createdBy" th:text="*{createdByUserDisplayValue}"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="ownedBy" class="col-sm-2">Owned By</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="ownedBy" th:text="*{ownedByUserDisplayValue}"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="assignedTo" class="col-sm-2">Assigned To</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="assignedTo" th:text="*{assignedToUserDisplayValue}"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="ticketStatus" class="col-sm-2">Status</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="ticketStatus" th:text="*{ticketStatusDisplayValue}"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="queue" class="col-sm-2">Queue</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="queue" th:text="*{queueDisplayValue}"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="priority" class="col-sm-2">Priority</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="priority" th:text="*{priorityDisplayValue}"></span>
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+            <label for="closedDateTime" class="col-sm-2">Closed</label>
+            <div class="col-sm-10 form-control-plaintext">
+                <span id="closedDateTime" th:text="${#temporals.format(ticketViewDto.closedDateTime, 'dd-MMM-yyyy h:mm a')}"></span>
+                <span th:if="${ticketViewDto.closedDateTime ne null}">
+                    <span> by </span>
+                    <span id="closedBy" th:text="*{closedByUserDisplayValue}"></span>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="closureComment">Closure Comment</label>
+            <div class="form-control-plaintext">
+                <span id="closureComment" style="white-space: pre-line" th:text="*{closureComment}"></span>
+            </div>
+        </div>
+    </div>
+
+    <h3>Comments</h3>
+    <div class="tt-section-margin">
+        <div th:if="*{comments.isEmpty()}" class="tt-empty-table-text">
+            No comments
+        </div>
+        <div th:if="*{!comments.isEmpty()}">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr th:each="comment : *{comments}">
+                        <td>
+                            <span th:text="${#temporals.format(comment.createdDateTime, 'dd-MMM-yyyy h:mm a')}"></span>
+                            <span> by </span>
+                            <span th:text="${comment.createdByUserDisplayValue}"></span>
+                            <br>
+                            <span style="white-space: pre-line" th:text="${comment.commentText}"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

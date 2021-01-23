@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - New Ticket</title>
+</head>
+
+<!--/*@thymesVar id="ticketCreateDto" type="com.garygriffaw.tickettracker.dto.TicketCreateDto"*/-->
+<!--/*@thymesVar id="queueSelectDtoList" type="java.util.List"*/-->
+<!--/*@thymesVar id="ticketQueue" type="com.garygriffaw.tickettracker.dto.QueueSelectDto"*/-->
+<!--/*@thymesVar id="ticketPrioritySelectDtoList" type="java.util.List"*/-->
+<!--/*@thymesVar id="ticketPriority" type="com.garygriffaw.tickettracker.dto.TicketPrioritySelectDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/tickets/new-save}" th:object="${ticketCreateDto}" method="POST">
+        <h3>New Ticket</h3>
+        <div class="tt-section-margin">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('title')}"
+                     th:errors="*{title}">
+                </div>
+                <input type="text" class="form-control" id="title"
+                       th:field="*{title}" placeholder="Title" autofocus>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('description')}"
+                     th:errors="*{description}">
+                </div>
+                <textarea rows="5" class="form-control" id="description"
+                          th:field="*{description}" placeholder="Description">
+                </textarea>
+            </div>
+            <div class="form-group">
+                <label for="queue">Queue</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('queueId')}"
+                     th:errors="*{queueId}">
+
+                </div>
+                <select class="form-control" id="queue" th:field="*{queueId}">
+                    <option label="-- Select --" value=""></option>
+                    <option th:each="ticketQueue : *{queueSelectListDto}"
+                            th:value="${ticketQueue.queueId}"
+                            th:text="${ticketQueue.queueName}">
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('priority')}"
+                     th:errors="*{priority}">
+                </div>
+                <select class="form-control" id="priority" th:field="*{priority}">
+                    <option th:each="ticketPriority : *{ticketPrioritySelectListDto}"
+                            th:value="${ticketPriority.priorityValue}"
+                            th:text="${ticketPriority.displayValue}">
+                    </option>
+                </select>
+            </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+            <button class="btn tt-btn-primary col-2" type="submit" name="save" value="Save">Submit Ticket</button>
+            <button class="btn tt-btn-primary col-2" type="submit" name="cancel" value="Cancel">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker</title>
+</head>
+
+<!--/*@thymesVar id="myOpenCreatedOrOwnedTickets" type="java.util.List"*/-->
+<!--/*@thymesVar id="createdTicket" type="com.garygriffaw.tickettracker.dto.TicketTableDto"*/-->
+<!--/*@thymesVar id="myOpenAssignedToTickets" type="java.util.List"*/-->
+<!--/*@thymesVar id="assignedTicket" type="com.garygriffaw.tickettracker.dto.TicketTableDto"*/-->
+<!--/*@thymesVar id="openUnassignedTicketsNotMine" type="java.util.List"*/-->
+<!--/*@thymesVar id="unassignedTicket" type="com.garygriffaw.tickettracker.dto.TicketTableDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <a th:href="@{/tickets/new}" class="btn tt-btn-primary">Create New Ticket</a>
+
+    <h3>Open Tickets Created or Owned by Me</h3>
+    <div class="tt-section-margin">
+        <div th:if="${myOpenCreatedOrOwnedTickets.isEmpty()}" class="tt-empty-table-text">
+            No open tickets created or owned by me and not assigned to me
+        </div>
+        <div th:if="${!myOpenCreatedOrOwnedTickets.isEmpty()}">
+            <table class="table table-bordered table-striped">
+                <thead class="tt-thead">
+                    <tr>
+                        <th class="w-auto">Priority</th>
+                        <th class="w-auto">Date</th>
+                        <th class="w-auto">Title</th>
+                        <th class="w-auto">Status</th>
+                        <th class="w-auto"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="createdTicket : ${myOpenCreatedOrOwnedTickets}">
+                        <td th:text="${createdTicket.priorityDisplayValue}">Priority 1</td>
+                        <td th:text="${#temporals.format(createdTicket.createdDateTime, 'dd-MMM-yyyy h:mm a')}">Date 1</td>
+                        <td th:text="${createdTicket.title}">Title 1</td>
+                        <td th:text="${createdTicket.ticketStatusDisplayValue}">Status 1</td>
+                        <td>
+                            <a th:href="@{/tickets/update(id=${createdTicket.ticketId})}" class="btn tt-btn-primary btn-sm">
+                                Update
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3>Open Tickets Assigned To Me</h3>
+    <div class="tt-section-margin">
+        <div th:if="${myOpenAssignedToTickets.isEmpty()}" class="tt-empty-table-text">
+            No open tickets assigned to me
+        </div>
+        <div th:if="${!myOpenAssignedToTickets.isEmpty()}">
+            <table class="table table-bordered table-striped">
+                <thead class="tt-thead">
+                    <tr>
+                        <th class="w-auto">Priority</th>
+                        <th class="w-auto">Date</th>
+                        <th class="w-auto">Title</th>
+                        <th class="w-auto">Status</th>
+                        <th class="w-auto"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="assignedTicket : ${myOpenAssignedToTickets}">
+                        <td th:text="${assignedTicket.priorityDisplayValue}">Priority 1</td>
+                        <td th:text="${#temporals.format(assignedTicket.createdDateTime, 'dd-MMM-yyyy h:mm a')}">Date 1</td>
+                        <td th:text="${assignedTicket.title}">Title 1</td>
+                        <td th:text="${assignedTicket.ticketStatusDisplayValue}">Status 1</td>
+                        <td>
+                            <a th:href="@{/tickets/update(id=${assignedTicket.ticketId})}" class="btn tt-btn-primary btn-sm">
+                                Update
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3>Open Unassigned Tickets in My Queue(s)</h3>
+    <div class="tt-section-margin">
+        <div th:if="${openUnassignedTicketsNotMine.isEmpty()}" class="tt-empty-table-text">
+            No open unassigned tickets that don't belong to me
+        </div>
+        <div th:if="${!openUnassignedTicketsNotMine.isEmpty()}">
+            <table class="table table-bordered table-striped">
+                <thead class="tt-thead">
+                    <tr>
+                        <th class="w-auto">Priority</th>
+                        <th class="w-auto">Date</th>
+                        <th class="w-auto">Title</th>
+                        <th class="w-auto">Status</th>
+                        <th class="w-auto"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="unassignedTicket : ${openUnassignedTicketsNotMine}">
+                        <td th:text="${unassignedTicket.priorityDisplayValue}">Priority 1</td>
+                        <td th:text="${#temporals.format(unassignedTicket.createdDateTime, 'dd-MMM-yyyy h:mm a')}">Date 1</td>
+                        <td th:text="${unassignedTicket.title}">Title 1</td>
+                        <td th:text="${unassignedTicket.ticketStatusDisplayValue}">Status 1</td>
+                        <td>
+                            <a th:href="@{/tickets/update(id=${unassignedTicket.ticketId})}" class="btn tt-btn-primary btn-sm">
+                                Update
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

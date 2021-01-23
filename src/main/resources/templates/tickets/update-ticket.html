@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - Update Ticket</title>
+</head>
+
+<!--/*@thymesVar id="ticketUpdateDto" type="com.garygriffaw.tickettracker.dto.TicketUpdateDto"*/-->
+<!--/*@thymesVar id="commentListDto" type="java.util.List"*/-->
+<!--/*@thymesVar id="comment" type="com.garygriffaw.tickettracker.dto.TicketCommentDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/tickets/update-save}" th:object="${ticketUpdateDto}" method="POST">
+        <h3>Update Ticket</h3>
+        <div class="tt-section-margin">
+            <!-- ID used for updates  -->
+            <input type="hidden" th:field="*{ticketId}">
+
+            <div class="form-group row align-items-center">
+                <label for="title" class="col-sm-2">Title</label>
+                <div class="col-sm-10 form-control-plaintext">
+                    <span id="title" th:text="*{title}"></span>
+                    <input type="hidden" th:field="*{title}">
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label for="description" class="col-sm-2">Description</label>
+                <div class="col-sm-10 form-control-plaintext">
+                    <span id="description" th:text="*{description}" style="white-space: pre-line"></span>
+                    <input type="hidden" th:field="*{description}">
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label for="createdDateTime" class="col-sm-2">Created</label>
+                <div class="col-sm-10 form-control-plaintext">
+                    <span id="createdDateTime"
+                          th:text="${#temporals.format(ticketUpdateDto.createdDateTime, 'dd-MMM-yyyy h:mm a')}">
+                    </span>
+                    <input type="hidden" th:field="*{createdDateTime}">
+                    <span> by </span>
+                    <span id="createdBy" th:text="*{createdByUserDisplayValue}"></span>
+                    <input type="hidden" th:field="*{createdByUserName}">
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label for="ownedBy" class="col-sm-2">Owned By</label>
+                <div class="col-sm-10">
+                    <div class="alert tt-alert"
+                         th:if="${#fields.hasErrors('ownedByUserName')}"
+                         th:errors="*{ownedByUserName}">
+                    </div>
+                    <select class="form-control" id="ownedBy" th:field="*{ownedByUserName}">
+                        <option th:each="ownedBySelect : *{ownedBySelectListDto}"
+                                th:value="${ownedBySelect.userName}"
+                                th:text="${ownedBySelect.userDisplayValue}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label for="assignedTo" class="col-sm-2">Assigned To</label>
+                <div class="col-sm-10">
+                    <div class="alert tt-alert"
+                         th:if="${#fields.hasErrors('assignedToUserName')}"
+                         th:errors="*{assignedToUserName}">
+                    </div>
+                    <select class="form-control" id="assignedTo" th:field="*{assignedToUserName}">
+                        <option label="-- Unassigned --" value=""></option>
+                        <option th:each="assignedToSelect : *{assignedToSelectListDto}"
+                                th:value="${assignedToSelect.userName}"
+                                th:text="${assignedToSelect.userDisplayValue}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label for="ticketStatus" class="col-sm-2">Status</label>
+                <div class="col-sm-10">
+                    <div class="alert tt-alert"
+                         th:if="${#fields.hasErrors('ticketStatus')}"
+                         th:errors="*{ticketStatus}">
+                    </div>
+                    <select class="form-control" id="ticketStatus" th:field="*{ticketStatus}" onchange="statusFunction()">
+                        <option th:each="ticketStatusSelect : *{ticketStatusSelectListDto}"
+                                th:value="${ticketStatusSelect.statusValue}"
+                                th:text="${ticketStatusSelect.displayValue}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label for="queue" class="col-sm-2">Queue</label>
+                <div class="col-sm-10">
+                    <div class="alert tt-alert"
+                         th:if="${#fields.hasErrors('queueId')}"
+                         th:errors="*{queueId}">
+                    </div>
+                    <select class="form-control" id="queue" th:field="*{queueId}">
+                        <option th:each="queueSelect : *{queueSelectListDto}"
+                                th:value="${queueSelect.queueId}"
+                                th:text="${queueSelect.queueName}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label for="priority" class="col-sm-2">Priority</label>
+                <div class="col-sm-10">
+                    <div class="alert tt-alert"
+                         th:if="${#fields.hasErrors('priority')}"
+                         th:errors="*{priority}">
+                    </div>
+                    <select class="form-control" id="priority" th:field="*{priority}">
+                        <option th:each="ticketPrioritySelect : *{ticketPrioritySelectListDto}"
+                                th:value="${ticketPrioritySelect.priorityValue}"
+                                th:text="${ticketPrioritySelect.displayValue}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="display:none;" id="closedCommentFields">
+                <label for="closureComment">Closure Comment</label>
+                <div class="alert tt-alert"
+                     th:if="${#fields.hasErrors('closureComment')}"
+                     th:errors="*{closureComment}">
+                </div>
+                <textarea rows="5" class="form-control" id="closureComment" th:field="*{closureComment}"
+                          placeholder="Enter steps taken to complete the request or the reason it was cancelled">
+                </textarea>
+            </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+            <button class="btn tt-btn-primary col-2 mb-3" type="submit" name="save" value="Save">Update Ticket</button>
+            <button class="btn tt-btn-primary col-2 mb-3" type="submit" name="cancel" value="Cancel">Cancel</button>
+        </div>
+
+        <h3>Comments</h3>
+        <div class="tt-section-margin">
+            <a th:href="@{/tickets/new-comment(id=*{ticketId})}" class="btn tt-btn-primary mb-3">
+                Add New Comment
+            </a>
+            <div th:if="*{comments.isEmpty()}" class="tt-empty-table-text">
+                No comments
+            </div>
+            <div th:if="*{!comments.isEmpty()}">
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr th:each="comment : *{comments}">
+                            <td>
+                                <span th:text="${#temporals.format(comment.createdDateTime, 'dd-MMM-yyyy h:mm a')}"></span>
+                                <span> by </span>
+                                <span th:text="${comment.createdByUserDisplayValue}"></span>
+                                <br>
+                                <span style="white-space: pre-line" th:text="${comment.commentText}"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+<script>
+    $(document).ready(function(){
+        $("#ticketStatus").on("change", function(e){
+            var v = this.value;
+            // }
+            if(v == "COMPLETE" || v == "CANCELLED") {
+                $("#closedCommentFields").slideDown();
+            } else {
+                $("#closedCommentFields").slideUp();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

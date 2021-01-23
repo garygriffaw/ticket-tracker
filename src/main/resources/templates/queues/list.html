@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - Queue List</title>
+</head>
+
+<!--/*@thymesVar id="queues" type="java.util.List"*/-->
+<!--/*@thymesVar id="queue" type="com.garygriffaw.tickettracker.dto.QueueTableDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3>Queue Listing</h3>
+    <div class="tt-section-margin">
+        <a th:href="@{/queues/new}" class="btn tt-btn-primary btn-sm mb-3">New Queue</a>
+        <table class="table table-bordered table-striped">
+            <thead class="tt-thead">
+                <tr>
+                    <th>Queue Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="queue : ${queues}">
+                    <td th:text="${queue.queueName}">Queue 1</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

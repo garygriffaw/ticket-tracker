@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - User List</title>
+</head>
+
+<!--/*@thymesVar id="users" type="java.util.List"*/-->
+<!--/*@thymesVar id="user" type="com.garygriffaw.tickettracker.dto.UserAccountTableDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3>User Listing</h3>
+    <div class="tt-section-margin">
+        <table class="table table-bordered table-striped">
+            <thead class="tt-thead">
+                <tr>
+                    <th class="w-auto">Username</th>
+                    <th class="w-auto">Name</th>
+                    <th class="w-auto">Email</th>
+                    <th class="w-auto">Role</th>
+                    <th class="w-auto">Status</th>
+                    <th class="w-auto"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.userName}">ID 1</td>
+                    <td th:text="${user.firstName + ' ' + user.lastName}">Name 1</td>
+                    <td th:text="${user.email}">Email 1</td>
+                    <td th:text="${user.getRoleDisplayValue()}">Role 1</td>
+                    <td><span th:unless="${user.enabled}">Inactive</span></td>
+                    <td>
+                        <a th:href="@{/users/update(id=${user.userName})}" class="btn btn-primary btn-sm">Update</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layouts :: header">
+    <title id="pageTitle">Ticket Tracker - Add Queue to User</title>
+</head>
+
+<!--/*@thymesVar id="userAccountQueueDto" type="com.garygriffaw.tickettracker.dto.UserAccountQueueDto"*/-->
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <form th:action="@{/users/save-queue}" th:object="${userAccountQueueDto}" method="POST">
+        <h3>Add Queue to User</h3>
+        <div class="tt-section-margin">
+            <input type="hidden" th:field="*{userName}">
+            <div class="form-group">
+                <select class="form-control" id="queueId" th:field="*{queueId}">
+                    <option label="-- Select a Queue --" value=""></option>
+                    <option th:each="queueSelect : *{queueSelectDtoList}"
+                            th:value="${queueSelect.queueId}"
+                            th:text="${queueSelect.queueName}">
+                    </option>
+                </select>
+            </div>
+
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+            <button class="btn tt-btn-primary col-2" type="submit" name="save" value="Save">Submit Queue</button>
+            <button class="btn tt-btn-primary col-2" type="submit" name="cancel" value="Cancel">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<span th:replace="layouts :: footer"></span>
+
+</body>
+</html>
