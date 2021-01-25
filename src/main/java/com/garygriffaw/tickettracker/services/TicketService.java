@@ -1,9 +1,6 @@
 package com.garygriffaw.tickettracker.services;
 
-import com.garygriffaw.tickettracker.entities.Queue;
-import com.garygriffaw.tickettracker.entities.Ticket;
-import com.garygriffaw.tickettracker.entities.TicketPrevValues;
-import com.garygriffaw.tickettracker.entities.UserAccount;
+import com.garygriffaw.tickettracker.entities.*;
 import com.garygriffaw.tickettracker.enums.TicketStatus;
 import com.garygriffaw.tickettracker.helpers.StringBuilderPlus;
 import com.garygriffaw.tickettracker.repositories.TicketRepository;
@@ -23,6 +20,9 @@ public class TicketService {
 
     @Autowired
     QueueService queueService;
+
+    @Autowired
+    TicketCommentService ticketCommentService;
 
     @Autowired
     UserAccountService userAccountService;
@@ -52,6 +52,21 @@ public class TicketService {
         ticketPrevValues.setQueue(oldTicket.getQueue());
 
         return ticketPrevValues;
+    }
+
+    public Ticket setUpdateValues(TicketPrevValues ticketPrevValues, Ticket ticket, Principal principal) {
+        ticket = setClosedByValues(ticketPrevValues, ticket, principal);
+
+        // System generated comment based on updated fields
+        String updateCommentText = createUpdateComment(ticketPrevValues, ticket, principal);
+        if(updateCommentText != null && !updateCommentText.equals("")) {
+            TicketComment updateComment = new TicketComment();
+            updateComment = ticketCommentService.setNewValues(updateComment, principal);
+            updateComment.setCommentText(updateCommentText);
+            ticket.addComment(updateComment);
+        }
+
+        return ticket;
     }
 
     public Ticket setClosedByValues(TicketPrevValues prevValues, Ticket updateTicket, Principal principal) {

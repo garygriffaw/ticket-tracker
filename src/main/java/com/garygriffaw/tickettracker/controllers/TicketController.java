@@ -139,16 +139,7 @@ public class TicketController {
 
         Ticket updateTicket = ticketConverter.ticketUpdateDtoToEntity(ticketUpdateDto);
 
-        updateTicket = ticketService.setClosedByValues(ticketPrevValues, updateTicket, principal);
-
-        // System generated comment based on updated fields
-        String updateCommentText = ticketService.createUpdateComment(ticketPrevValues, updateTicket, principal);
-        if(updateCommentText != null && !updateCommentText.equals("")) {
-            TicketComment updateComment = new TicketComment();
-            updateComment = ticketCommentService.setNewValues(updateComment, principal);
-            updateComment.setCommentText(updateCommentText);
-            updateTicket.addComment(updateComment);
-        }
+        updateTicket = ticketService.setUpdateValues(ticketPrevValues, updateTicket, principal);
 
         ticketService.save(updateTicket);
 
