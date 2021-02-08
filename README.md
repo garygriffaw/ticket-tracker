@@ -1,6 +1,8 @@
 # Ticket Tracker
 Ticket Tracker is a system for submitting work tickets and keeping track of them through resolution.
-The project utilizes Java, Spring, Thymeleaf, html, and css.
+The project utilizes Java, Spring, Thymeleaf, JUnit 5, mockito, html, and css.
+
+I am in the process of adding the unit tests.
 
 At the moment this project uses an H2 database.
 The project should be ran from a Java IDE.

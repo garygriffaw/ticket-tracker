@@ -4,8 +4,6 @@ import com.garygriffaw.tickettracker.dto.QueueCreateDto;
 import com.garygriffaw.tickettracker.dto.QueueSelectDto;
 import com.garygriffaw.tickettracker.dto.QueueTableDto;
 import com.garygriffaw.tickettracker.entities.Queue;
-import com.garygriffaw.tickettracker.services.QueueService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,9 +11,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class QueueConverter {
-
-    @Autowired
-    QueueService queueService;
 
     // ---------------------------------------------------------------------------------------------------------------
     // QueueCreateDto - Used when creating a new queue

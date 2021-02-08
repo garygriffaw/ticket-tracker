@@ -16,9 +16,6 @@ public class UserAccountConverter {
     @Autowired
     UserAccountService userAccountService;
 
-    @Autowired
-    QueueConverter queueConverter;
-
     // ---------------------------------------------------------------------------------------------------------------
     // RegisterDto - Used when a user is registering
     // ---------------------------------------------------------------------------------------------------------------

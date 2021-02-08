@@ -38,6 +38,7 @@ public class Queue implements Comparable<Queue> {
         return getClass().hashCode();
     }
 
+
     // Generated Getters and Setters
 
     public Long getQueueId() {
