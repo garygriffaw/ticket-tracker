@@ -34,7 +34,7 @@ class TicketCommentConverterTest {
         dto.setTicketId(1L);
 
         //when
-        TicketComment actualEntity = converter.ticketCommentDtoToEntity(dto);
+        final TicketComment actualEntity = converter.ticketCommentDtoToEntity(dto);
 
         //then
         assertAll(
@@ -48,16 +48,16 @@ class TicketCommentConverterTest {
     @Test
     void entityToTicketCommentDto() {
         //given
-        LocalDateTime timeValue = LocalDateTime.now();
+        final LocalDateTime timeValue = LocalDateTime.now();
 
-        UserAccount user1 = createUserAccount("uname", "fname", "lname");
+        final UserAccount user1 = createUserAccount("uname", "fname", "lname");
 
-        Ticket ticket1 = createTicket(100L);
+        final Ticket ticket1 = createTicket(100L);
 
-        TicketComment ticketComment = createTicketComment(1L, timeValue, user1, "abc", ticket1);
+        final TicketComment ticketComment = createTicketComment(1L, timeValue, user1, "abc", ticket1);
 
         //when
-        TicketCommentDto actualDto = converter.entityToTicketCommentDto(ticketComment);
+        final TicketCommentDto actualDto = converter.entityToTicketCommentDto(ticketComment);
 
         //then
         assertAll(
@@ -73,14 +73,14 @@ class TicketCommentConverterTest {
     @Test
     void entityToTicketCommentDtoNullUser() {
         //given
-        LocalDateTime timeValue = LocalDateTime.now();
+        final LocalDateTime timeValue = LocalDateTime.now();
 
-        Ticket ticket = createTicket(100L);
+        final Ticket ticket = createTicket(100L);
 
-        TicketComment ticketComment = createTicketComment(1L, timeValue, null, "abc", ticket);
+        final TicketComment ticketComment = createTicketComment(1L, timeValue, null, "abc", ticket);
 
         //when
-        TicketCommentDto actualDto = converter.entityToTicketCommentDto(ticketComment);
+        final TicketCommentDto actualDto = converter.entityToTicketCommentDto(ticketComment);
 
         //then
         assertAll(
@@ -96,20 +96,20 @@ class TicketCommentConverterTest {
     @Test
     void entityListToTicketCommentListDto() {
         //given
-        LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
-        LocalDateTime timeValue2 = LocalDateTime.now();
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+        final LocalDateTime timeValue2 = LocalDateTime.now();
 
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1");
-        UserAccount user2 = createUserAccount("uname2", "fname2", "lname2");
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1");
+        final UserAccount user2 = createUserAccount("uname2", "fname2", "lname2");
 
-        Ticket ticket1 = createTicket(100L);
+        final Ticket ticket1 = createTicket(100L);
 
         List<TicketComment> comments = new ArrayList<>();
         comments.add(createTicketComment(1L, timeValue1, user1, "abc", ticket1));
         comments.add(createTicketComment(2L, timeValue2, user2, "def", ticket1));
 
         //when
-        List<TicketCommentDto> actualDtoList = converter.entityListToTicketCommentListDto(comments);
+        final List<TicketCommentDto> actualDtoList = converter.entityListToTicketCommentListDto(comments);
 
         //then
         assertAll(

@@ -52,11 +52,11 @@ class TicketConverterTest {
         dto.setQueueId(1L);
         dto.setPriority("MEDIUM");
 
-        Queue queue = createQueue(1L, "queue1");
+        final Queue queue = createQueue(1L, "queue1");
         given(queueService.findById(anyLong())).willReturn(queue);
 
         //when
-        Ticket actualEntity = converter.ticketCreateDtoToEntity(dto);
+        final Ticket actualEntity = converter.ticketCreateDtoToEntity(dto);
 
         //then
         assertAll(
@@ -70,23 +70,23 @@ class TicketConverterTest {
     @Test
     void entityToTicketTableDto() {
         //given
-        LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
-        LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(11);
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+        final LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(11);
 
-        Queue queue1 = createQueue(1L, "abc");
+        final Queue queue1 = createQueue(1L, "abc");
 
-        UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
-        UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
-        UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
-        UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
+        final UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
+        final UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
+        final UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
+        final UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
 
-        Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
+        final Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
                 TicketPriority.MEDIUM, timeValue1, createdByUser,
                 ownedByUser, assignedToUser, timeValue2,
                 closedByUser, "closure1", queue1);
 
         //when
-        TicketTableDto actualDto = converter.entityToTicketTableDto(ticket);
+        final TicketTableDto actualDto = converter.entityToTicketTableDto(ticket);
 
         //then
         assertAll(
@@ -101,17 +101,17 @@ class TicketConverterTest {
     @Test
     void entityListToTicketTableDtoList() {
         //given
-        LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
-        LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(11);
-        LocalDateTime timeValue3 = LocalDateTime.now().minusMinutes(12);
-        LocalDateTime timeValue4 = LocalDateTime.now().minusMinutes(13);
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+        final LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(11);
+        final LocalDateTime timeValue3 = LocalDateTime.now().minusMinutes(12);
+        final LocalDateTime timeValue4 = LocalDateTime.now().minusMinutes(13);
 
-        Queue queue1 = createQueue(1L, "abc");
+        final Queue queue1 = createQueue(1L, "abc");
 
-        UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
-        UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
-        UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
-        UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
+        final UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
+        final UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
+        final UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
+        final UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
 
         List<Ticket> tickets = new ArrayList<>();
         tickets.add(createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
@@ -124,7 +124,7 @@ class TicketConverterTest {
                 closedByUser, "closure2", queue1));
 
         //when
-        List<TicketTableDto> actualDtoList = converter.entityListToTicketTableDtoList(tickets);
+        final List<TicketTableDto> actualDtoList = converter.entityListToTicketTableDtoList(tickets);
 
         //then
         assertAll(
@@ -150,17 +150,17 @@ class TicketConverterTest {
     @Test
     void entityToTicketUpdateDto() {
         //given
-        LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
-        LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(9);
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+        final LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(9);
 
-        Queue queue1 = createQueue(1L, "abc");
+        final Queue queue1 = createQueue(1L, "abc");
 
-        UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
-        UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
-        UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
-        UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
+        final UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
+        final UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
+        final UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
+        final UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
 
-        Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
+        final Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
                 TicketPriority.MEDIUM, timeValue1, createdByUser,
                 ownedByUser, assignedToUser, timeValue2,
                 closedByUser, "closure1", queue1);
@@ -173,7 +173,7 @@ class TicketConverterTest {
         given(ticketCommentConverter.entityListToTicketCommentListDto(any())).willReturn(commentDtoList);
 
         //when
-        TicketUpdateDto actualDto = converter.entityToTicketUpdateDto(ticket);
+        final TicketUpdateDto actualDto = converter.entityToTicketUpdateDto(ticket);
 
         //then
         assertAll(
@@ -194,22 +194,57 @@ class TicketConverterTest {
     }
 
     @Test
+    void entityToTicketUpdateDtoNulls() {
+        //given
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+
+        final UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
+
+        final Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
+                TicketPriority.MEDIUM, timeValue1, createdByUser,
+                null, null, null,
+                null, null, null);
+
+        given(ticketCommentConverter.entityListToTicketCommentListDto(any())).willReturn(null);
+
+        //when
+        final TicketUpdateDto actualDto = converter.entityToTicketUpdateDto(ticket);
+
+        //then
+        assertAll(
+                () -> assertThat(actualDto.getTicketId()).isEqualTo(1L),
+                () -> assertThat(actualDto.getTitle()).isEqualTo("title1"),
+                () -> assertThat(actualDto.getDescription()).isEqualTo("desc1"),
+                () -> assertThat(actualDto.getCreatedDateTime()).isEqualTo(timeValue1),
+                () -> assertThat(actualDto.getCreatedByUserName()).isEqualTo("uname1"),
+                () -> assertThat(actualDto.getCreatedByUserDisplayValue()).isEqualTo("lname1, fname1 (uname1)"),
+                () -> assertThat(actualDto.getOwnedByUserName()).isEqualTo(""),
+                () -> assertThat(actualDto.getAssignedToUserName()).isEqualTo(""),
+                () -> assertThat(actualDto.getTicketStatus()).isEqualTo("INWORK"),
+                () -> assertThat(actualDto.getQueueId()).isNull(),
+                () -> assertThat(actualDto.getPriority()).isEqualTo("MEDIUM"),
+                () -> assertThat(actualDto.getClosureComment()).isNull(),
+                () -> assertThat(actualDto.getComments()).isNull()
+        );
+    }
+
+    @Test
     void ticketUpdateDtoToEntity() {
         //given
-        LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
-        LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(9);
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+        final LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(9);
 
-        Queue queue1 = createQueue(1L, "abc");
-        Queue queue2 = createQueue(2L, "def");
+        final Queue queue1 = createQueue(1L, "abc");
+        final Queue queue2 = createQueue(2L, "def");
 
-        UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
-        UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
-        UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
-        UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
-        UserAccount updatedOwnedByUser = createUserAccount("uname5", "fname5", "lname5");
-        UserAccount updatedAssignedToUser = createUserAccount("uname6", "fname6", "lname6");
+        final UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
+        final UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
+        final UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
+        final UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
+        final UserAccount updatedOwnedByUser = createUserAccount("uname5", "fname5", "lname5");
+        final UserAccount updatedAssignedToUser = createUserAccount("uname6", "fname6", "lname6");
 
-        Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
+        final Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
                 TicketPriority.MEDIUM, timeValue1, createdByUser,
                 ownedByUser, assignedToUser, timeValue2,
                 closedByUser, "closure1", queue1);
@@ -228,7 +263,7 @@ class TicketConverterTest {
         given(queueService.findById(anyLong())).willReturn(queue2);
 
         //when
-        Ticket actualEntity = converter.ticketUpdateDtoToEntity(dto);
+        final Ticket actualEntity = converter.ticketUpdateDtoToEntity(dto);
 
         //then
         assertAll(
@@ -244,25 +279,71 @@ class TicketConverterTest {
     }
 
     @Test
+    void ticketUpdateDtoToEntityBlanks() {
+        //given
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+        final LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(9);
+
+        final Queue queue1 = createQueue(1L, "abc");
+
+        final UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
+        final UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
+        final UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
+        final UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
+        final UserAccount updatedOwnedByUser = createUserAccount("uname5", "fname5", "lname5");
+
+        final Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
+                TicketPriority.MEDIUM, timeValue1, createdByUser,
+                ownedByUser, assignedToUser, timeValue2,
+                closedByUser, "closure1", queue1);
+
+        TicketUpdateDto dto = new TicketUpdateDto();
+        dto.setOwnedByUserName("uname5");
+        dto.setAssignedToUserName("");
+        dto.setTicketStatus("ASSIGNED");
+        dto.setQueueId(null);
+        dto.setPriority("LOW");
+        dto.setClosureComment("");
+
+        given(ticketService.findById(anyLong())).willReturn(ticket);
+        given(userAccountService.findById("uname5")).willReturn(updatedOwnedByUser);
+
+        //when
+        final Ticket actualEntity = converter.ticketUpdateDtoToEntity(dto);
+
+        //then
+        assertAll(
+                () -> assertThat(actualEntity.getTicketId()).isEqualTo(1L),
+                () -> assertThat(actualEntity.getTitle()).isEqualTo("title1"),
+                () -> assertThat(actualEntity.getOwnedBy()).isEqualTo(updatedOwnedByUser),
+                () -> assertThat(actualEntity.getAssignedTo()).isNull(),
+                () -> assertThat(actualEntity.getTicketStatus()).isEqualTo(TicketStatus.ASSIGNED),
+                () -> assertThat(actualEntity.getQueue()).isNull(),
+                () -> assertThat(actualEntity.getPriority()).isEqualTo(TicketPriority.LOW),
+                () -> assertThat(actualEntity.getClosureComment()).isEqualTo("")
+        );
+    }
+
+    @Test
     void entityToTicketViewDto() {
         //given
-        LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
-        LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(9);
+        final LocalDateTime timeValue1 = LocalDateTime.now().minusMinutes(10);
+        final LocalDateTime timeValue2 = LocalDateTime.now().minusMinutes(9);
 
-        Queue queue1 = createQueue(1L, "abc");
+        final Queue queue1 = createQueue(1L, "abc");
 
-        UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
-        UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
-        UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
-        UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
+        final UserAccount createdByUser = createUserAccount("uname1", "fname1", "lname1");
+        final UserAccount ownedByUser = createUserAccount("uname2", "fname2", "lname2");
+        final UserAccount assignedToUser = createUserAccount("uname3", "fname3", "lname3");
+        final UserAccount closedByUser = createUserAccount("uname4", "fname4", "lname4");
 
-        Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
+        final Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
                 TicketPriority.MEDIUM, timeValue1, createdByUser,
                 ownedByUser, assignedToUser, timeValue2,
                 closedByUser, "closure1", queue1);
 
         //when
-        TicketViewDto actualDto = converter.entityToTicketViewDto(ticket);
+        final TicketViewDto actualDto = converter.entityToTicketViewDto(ticket);
 
         //then
         assertAll(
@@ -282,6 +363,36 @@ class TicketConverterTest {
         );
     }
 
+    @Test
+    void entityToTicketViewDtoNulls() {
+        //given
+        final Ticket ticket = createTicket(1L, "title1", "desc1", TicketStatus.INWORK,
+                TicketPriority.MEDIUM, null, null,
+                null, null  , null,
+                null, null, null);
+
+        //when
+        final TicketViewDto actualDto = converter.entityToTicketViewDto(ticket);
+
+        //then
+        assertAll(
+                () -> assertThat(actualDto.getTicketId()).isEqualTo(1L),
+                () -> assertThat(actualDto.getTitle()).isEqualTo("title1"),
+                () -> assertThat(actualDto.getDescription()).isEqualTo("desc1"),
+                () -> assertThat(actualDto.getCreatedDateTime()).isNull(),
+                () -> assertThat(actualDto.getCreatedByUserDisplayValue()).isEqualTo(""),
+                () -> assertThat(actualDto.getOwnedByUserDisplayValue()).isEqualTo(""),
+                () -> assertThat(actualDto.getAssignedToUserDisplayValue()).isEqualTo(""),
+                () -> assertThat(actualDto.getTicketStatusDisplayValue()).isEqualTo("In Work"),
+                () -> assertThat(actualDto.getQueueDisplayValue()).isEqualTo(""),
+                () -> assertThat(actualDto.getPriorityDisplayValue()).isEqualTo("Medium"),
+                () -> assertThat(actualDto.getClosedDateTime()).isNull(),
+                () -> assertThat(actualDto.getClosedByUserDisplayValue()).isEqualTo(""),
+                () -> assertThat(actualDto.getClosureComment()).isNull()
+        );
+    }
+
+    //Helpers
     private Queue createQueue(Long id, String queueName) {
         Queue queue = new Queue();
 

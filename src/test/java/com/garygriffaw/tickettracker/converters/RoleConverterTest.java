@@ -25,7 +25,7 @@ class RoleConverterTest {
         //given
 
         //when
-        RoleSelectDto actualDto = converter.entityToRoleSelectDto(Role.ROLE_ADMIN);
+        final RoleSelectDto actualDto = converter.entityToRoleSelectDto(Role.ROLE_ADMIN);
 
         //then
         assertAll(
@@ -39,7 +39,7 @@ class RoleConverterTest {
         //given
 
         //when
-        List<RoleSelectDto> actualDtoList = converter.entityListToRoleSelectListDto(Arrays.asList(Role.values()));
+        final List<RoleSelectDto> actualDtoList = converter.entityListToRoleSelectListDto(Arrays.asList(Role.values()));
 
         //then
         assertAll(

@@ -25,7 +25,7 @@ class TicketStatusConverterTest {
         //given
 
         //when
-        TicketStatusSelectDto actualDto = converter.entityToTicketStatusSelectDto(TicketStatus.INWORK);
+        final TicketStatusSelectDto actualDto = converter.entityToTicketStatusSelectDto(TicketStatus.INWORK);
 
         //then
         assertAll(
@@ -39,7 +39,7 @@ class TicketStatusConverterTest {
         //given
 
         //when
-        List<TicketStatusSelectDto> actualDtoList =
+        final List<TicketStatusSelectDto> actualDtoList =
                 converter.entityListToTicketStatusSelectListDto(Arrays.asList(TicketStatus.values()));
 
         //then

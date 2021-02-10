@@ -160,7 +160,7 @@ public class TicketConverter {
         if(queue != null)
             return queue.getQueueId();
         else
-            return 0L;
+            return null;
     }
 
     private String getQueueDisplayValue(Queue queue) {

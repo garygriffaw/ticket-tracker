@@ -25,7 +25,7 @@ class TicketPriorityConverterTest {
         //given
 
         //when
-        TicketPrioritySelectDto actualDto = converter.entityToTicketPrioritySelectDto(TicketPriority.MEDIUM);
+        final TicketPrioritySelectDto actualDto = converter.entityToTicketPrioritySelectDto(TicketPriority.MEDIUM);
 
         //then
         assertAll(
@@ -40,7 +40,7 @@ class TicketPriorityConverterTest {
         //given
 
         //when
-        List<TicketPrioritySelectDto> actualDtoList =
+        final List<TicketPrioritySelectDto> actualDtoList =
                 converter.entityListToTicketPrioritySelectListDto(Arrays.asList(TicketPriority.values()));
 
         //then

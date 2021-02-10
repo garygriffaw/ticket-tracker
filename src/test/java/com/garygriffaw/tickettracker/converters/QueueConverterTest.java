@@ -29,7 +29,7 @@ class QueueConverterTest {
         dto.setQueueName("abc");
 
         //when
-        Queue actualEntity = converter.queueCreateDtoToEntity(dto);
+        final Queue actualEntity = converter.queueCreateDtoToEntity(dto);
 
         //then
         assertAll(
@@ -41,10 +41,10 @@ class QueueConverterTest {
     @Test
     void entityToQueueTableDto() {
         //given
-        Queue queue = createQueue(1L, "abc");
+        final Queue queue = createQueue(1L, "abc");
 
         //when
-        QueueTableDto actualDto = converter.entityToQueueTableDto(queue);
+        final QueueTableDto actualDto = converter.entityToQueueTableDto(queue);
 
         //then
         assertThat(actualDto.getQueueName()).isEqualTo("abc");
@@ -58,7 +58,7 @@ class QueueConverterTest {
         queues.add(createQueue(2L, "def"));
 
         //when
-        List<QueueTableDto> actualDtoList = converter.entityListToQueueTableDtoList(queues);
+        final List<QueueTableDto> actualDtoList = converter.entityListToQueueTableDtoList(queues);
 
         //then
         assertAll(
@@ -72,10 +72,10 @@ class QueueConverterTest {
     @Test
     void entityToQueueSelectDto() {
         //given
-        Queue queue = createQueue(1L, "abc");
+        final Queue queue = createQueue(1L, "abc");
 
         //when
-        QueueSelectDto actualDto = converter.entityToQueueSelectDto(queue);
+        final QueueSelectDto actualDto = converter.entityToQueueSelectDto(queue);
 
         //then
         assertAll(
@@ -92,7 +92,7 @@ class QueueConverterTest {
         queues.add(createQueue(2L, "def"));
 
         //when
-        List<QueueSelectDto> actualDtoList = converter.entityListToQueueSelectDtoList(queues);
+        final List<QueueSelectDto> actualDtoList = converter.entityListToQueueSelectDtoList(queues);
 
         //then
         assertAll(

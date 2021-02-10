@@ -39,7 +39,7 @@ class UserAccountConverterTest {
         dto.setConfirmPassword("cpass1");
 
         //when
-        UserAccount actualEntity = converter.registerDtoToEntity(dto);
+        final UserAccount actualEntity = converter.registerDtoToEntity(dto);
 
         //then
         assertAll(
@@ -56,11 +56,11 @@ class UserAccountConverterTest {
     @Test
     void entityToUserAccountSelectDto() {
         //given
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
 
         //when
-        UserAccountSelectDto actualDto = converter.entityToUserAccountSelectDto(user1);
+        final UserAccountSelectDto actualDto = converter.entityToUserAccountSelectDto(user1);
 
         //then
         assertAll(
@@ -79,7 +79,7 @@ class UserAccountConverterTest {
                 "pass2", Role.ROLE_ADMIN, false));
 
         //when
-        List<UserAccountSelectDto> actualDtoList = converter.entityListToUserAccountSelectDtoList(users);
+        final List<UserAccountSelectDto> actualDtoList = converter.entityListToUserAccountSelectDtoList(users);
 
         //then
         assertAll(
@@ -96,11 +96,11 @@ class UserAccountConverterTest {
     @Test
     void entityToProfileDto() {
         //given
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
 
         //when
-        ProfileDto actualDto = converter.entityToProfileDto(user1);
+        final ProfileDto actualDto = converter.entityToProfileDto(user1);
 
         //then
         assertAll(
@@ -120,12 +120,12 @@ class UserAccountConverterTest {
         dto.setLastName("lname2");
         dto.setEmail("email2");
 
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
         given(userAccountService.findById(any())).willReturn(user1);
 
         //when
-        UserAccount actualEntity = converter.profileDtoToEntity(dto);
+        final UserAccount actualEntity = converter.profileDtoToEntity(dto);
 
         //then
         assertAll(
@@ -142,11 +142,11 @@ class UserAccountConverterTest {
     @Test
     void entityToPasswordDto() {
         //given
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
 
         //when
-        PasswordDto actualDto = converter.entityToPasswordDto(user1);
+        final PasswordDto actualDto = converter.entityToPasswordDto(user1);
 
         //then
         assertAll(
@@ -162,12 +162,12 @@ class UserAccountConverterTest {
         PasswordDto dto = new PasswordDto();
         dto.setPassword("pass2");
 
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
         given(userAccountService.findById(any())).willReturn(user1);
 
         //when
-        UserAccount actualEntity = converter.passwordDtoToEntity(dto);
+        final UserAccount actualEntity = converter.passwordDtoToEntity(dto);
 
         //then
         assertAll(
@@ -184,11 +184,11 @@ class UserAccountConverterTest {
     @Test
     void entityToUserAccountQueueDto() {
         //given
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
 
         //when
-        UserAccountQueueDto actualDto = converter.entityToUserAccountQueueDto(user1);
+        final UserAccountQueueDto actualDto = converter.entityToUserAccountQueueDto(user1);
 
         //then
         assertAll(
@@ -201,11 +201,11 @@ class UserAccountConverterTest {
     @Test
     void entityToUserAccountTableDto() {
         //given
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
 
         //when
-        UserAccountTableDto actualDto = converter.entityToUserAccountTableDto(user1);
+        final UserAccountTableDto actualDto = converter.entityToUserAccountTableDto(user1);
 
         //then
         assertAll(
@@ -228,7 +228,7 @@ class UserAccountConverterTest {
                 "pass2", Role.ROLE_ADMIN, false));
 
         //when
-        List<UserAccountTableDto> actualDtoList = converter.entityListToUserAccountTableListDto(users);
+        final List<UserAccountTableDto> actualDtoList = converter.entityListToUserAccountTableListDto(users);
 
         //then
         assertAll(
@@ -257,11 +257,11 @@ class UserAccountConverterTest {
     @Test
     void entityToUserAccountUpdateDto() {
         //given
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
 
         //when
-        UserAccountUpdateDto actualDto = converter.entityToUserAccountUpdateDto(user1);
+        final UserAccountUpdateDto actualDto = converter.entityToUserAccountUpdateDto(user1);
 
         //then
         assertAll(
@@ -287,12 +287,12 @@ class UserAccountConverterTest {
         dto.setRole("ROLE_ADMIN");
         dto.setEnabled(false);
 
-        UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
+        final UserAccount user1 = createUserAccount("uname1", "fname1", "lname1", "email1",
                 "pass1", Role.ROLE_USER, true);
         given(userAccountService.findById(any())).willReturn(user1);
 
         //when
-        UserAccount actualEntity = converter.userAccountUpdateDtoToEntity(dto);
+        final UserAccount actualEntity = converter.userAccountUpdateDtoToEntity(dto);
 
         //then
         assertAll(
